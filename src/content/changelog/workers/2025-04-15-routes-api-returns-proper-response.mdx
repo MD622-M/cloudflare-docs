@@ -1,0 +1,49 @@
+---
+title: Workers Routes API returns a correct response
+description: Fixed the Workers Routes API always returning "null" for "script" and an empty string for "pattern".
+products:
+  - workers
+date: 2025-04-15T00:00:00Z
+---
+
+Previously, a request to the Workers [Create Route API](https://developers.cloudflare.com/api/resources/workers/subresources/routes/methods/create/) would always return `null` for "script" and an empty string for "pattern" even if the request was successful. Example request:
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/$CF_ACCOUNT_ID/workers/routes \
+  -X PUT \
+  -H "Authorization: Bearer $CF_API_TOKEN" \
+  -H 'Content-Type: application/json' \
+  --data '{ "pattern": "example.com/*", "script": "hello-world-script" }'
+```
+
+Example bad response:
+
+```
+{
+  "result": {
+    "id": "bf153a27ba2b464bb9f04dcf75de1ef9",
+    "pattern": "",
+    "script": null,
+    "request_limit_fail_open": false
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Now, it properly returns all values:
+
+```
+{
+  "result": {
+    "id": "bf153a27ba2b464bb9f04dcf75de1ef9",
+    "pattern": "example.com/*",
+    "script": "hello-world-script",
+    "request_limit_fail_open": false
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```

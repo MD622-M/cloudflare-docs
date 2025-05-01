@@ -1,0 +1,23 @@
+---
+title: Cloudflare Terraform Provider now properly redacts sensitive values
+description: Resources in the Cloudflare Terraform Provider that have sensitive properties will not show those values in logs.
+products:
+  - fundamentals
+date: 2025-03-21T00:00:00Z
+---
+
+In [Cloudflare Terraform Provider](https://github.com/cloudflare/terraform-provider-cloudflare) >5.2.0, resources that have sensitive properties will not have those values show up in logs. This was done by annotating properties in the [Cloudflare OpenAPI Schema](https://raw.githubusercontent.com/cloudflare/api-schemas/refs/heads/main/openapi.yaml) with `x-sensitive: true`. This results in proper auto-generation of the corresponding Terraform resources.
+
+This issue affected [resources](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) related to these products and features:
+
+- Alerts and Audit Logs
+- Device API
+- DLP
+- DNS
+- Magic Visibility
+- Magic WAN
+- TLS Certs and Hostnames
+- Tunnels
+- Turnstile
+- Workers
+- Zaraz

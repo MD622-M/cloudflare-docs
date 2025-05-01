@@ -1,0 +1,12 @@
+---
+title: Smart Placement will keep optimal placement decisions longer
+description: Workers and Pages Functions with Smart Placement enabled will not unexpectedly return to default locations if heuristics are no longer met.
+products:
+  - workers
+  - pages
+date: 2025-03-22T00:00:00Z
+---
+
+[Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement/) figures out potentially better locations to run Workers and Pages Functions. There are heuristics to get these compute resources placed in optimal locations that are different from default locations (closest to where the request is received). Previously if these heuristics were not consistently met, compute would return to running in default locations. Now after heuristics have been met at least once, dropping below them won't unset optimal locations.
+
+For example in the previous algorithm, a drop in requests for a few days might return to default locations and heuristics would have to be met again. This was problematic for workloads that made requests to a geographically located resource every few days or longer. In this scenario, compute would never get placed optimally. This is no longer the case.
