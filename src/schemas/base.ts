@@ -1,7 +1,7 @@
 import { z } from "astro:schema";
 import type { SchemaContext } from "astro:content";
 
-import { sidebar } from "./types/sidebar";
+import { sidebar, SidebarIconSchema } from "./types/sidebar";
 
 const spotlightAuthorDetails = z
 	.object({
@@ -112,4 +112,12 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			})
 			.optional()
 			.describe("Used by overrides for style guide component documentation"),
+		banner: z
+			.object({
+				content: z.string(),
+				type: z.enum(["default", "tip"]).optional().default("default"),
+				dismissible_id: z.string().optional(),
+			})
+			.optional(),
+		icon: SidebarIconSchema(),
 	});
